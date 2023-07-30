@@ -1,6 +1,6 @@
 import cv2 
 import face_recognition as fr
-from cam import Rec
+from modulos_py.WebCamPC.WebCam import Rec
 
 
 resolucao_P = (750,873) 

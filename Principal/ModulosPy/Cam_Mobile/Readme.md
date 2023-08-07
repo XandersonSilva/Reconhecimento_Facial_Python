@@ -1,12 +1,12 @@
 # Usando um celular como webcam
-
-    A dentro do script é ultilizado o cv2 para ler um video que esta sendo transmitido por um celular na rede local, o qual esta ultilizando o app IP Webcam disponivel na play store.
+---
+A dentro do script é ultilizado o cv2 para ler um video que esta sendo transmitido por um celular na rede local, o qual esta ultilizando o app IP Webcam disponivel na play store.
 
 1. Funcionamento:
     * O app *IP webcam* cria um servidor de streaming de vídeo usando a rede Wi-Fi do dispositivo Android. Ele atribui um endereço IP e uma porta ao servidor, permitindo que outros dispositivos acessem o stream de vídeo.
 
 2. Configuração :
-    * Baixe e instale o aplicativo "Webcam IP" no dispositivo Android.
+    * Baixe e instale o aplicativo "*IP Webcam*" no dispositivo Android.
     * Abra o aplicativo e conceda permissões.
     * Anote o endereço IP e a porta exibidos pelo aplicativo.
 

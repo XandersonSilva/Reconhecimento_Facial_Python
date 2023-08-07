@@ -5,8 +5,8 @@ def Rec():
 
     fremL = []   # Lista com as imagens
     fim = 0      # Contador 
-    finaliz = 3 # Valor máximo do contador
-    freq = 5    # Frequência em milissegundos em que a câmera sera acessada
+    finaliz = 3  # Valor máximo do contador
+    freq = 5     # Frequência em milissegundos em que a câmera sera acessada
     while fim !=finaliz:
         #capturar uma frame e armazena-la na variável 'frame'   
         ret, frame = webcam.read()

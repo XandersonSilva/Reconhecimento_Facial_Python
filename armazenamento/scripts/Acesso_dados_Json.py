@@ -35,7 +35,3 @@ def ApagaCaminho(Apagar):
                 conter -= 1
     with open (caminhoJson, 'w', encoding='utf-8') as arquivo:
         json.dump(Ldados , arquivo)
-
-
-
-(ApagaCaminho('../arquivos/imagens/Dev_Y/Dev_Y_F00.jpg'))

@@ -13,7 +13,7 @@ def Rec():
 
     fim = 0       # Contador 
     finaliz = 2   # Valor máximo do contador
-    freq = 0     # Frequência em milissegundos em que a câmera sera acessada
+    #freq = 0      #Frequência em milissegundos em que a câmera sera acessada
     while fim !=finaliz and valid:
         #capturar uma frame e armazena-la na variável 'frame'
         ret, frame = webcam.read()

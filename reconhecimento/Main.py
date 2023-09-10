@@ -48,7 +48,7 @@ while True:
         #COMPARACAO
         if fremL[f] != [] and fremL[f] != 0:
             try:
-                #Realiza a comparação dos rostos e a distância entre eles
+
                 compr = fr.compare_faces([encodeAluno], encodeCam[0])
                 distancia = fr.face_distance([encodeAluno], encodeCam[0])
                 #Printa se é a mesma pessoa, e a distância dos valores dos rostos.

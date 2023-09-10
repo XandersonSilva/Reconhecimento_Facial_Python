@@ -1,4 +1,7 @@
+import face_recognition as fr
 import json
+import numpy as np
+from acessar_paths import *
 
 caminhoJson = '../Dados_Imagens/dados.json'
 with open( caminhoJson, 'r', encoding='utf-8') as info:
@@ -35,3 +38,36 @@ def ApagaCaminho(Apagar):
                 conter -= 1
     with open (caminhoJson, 'w', encoding='utf-8') as arquivo:
         json.dump(Ldados , arquivo)
+
+def addEncod(img, encodeIMG):
+    quant = len(Ldados)
+    for c in range(0, quant):
+        Lcaminhos = Ldados[c]['Caminho_das_fotos']
+        quantCmnh =  len(Lcaminhos)
+        if quantCmnh > 0:
+            conter = quantCmnh - 1
+            while conter >= 0:
+                CmhAtu =  Ldados[c]['Caminho_das_fotos'][conter]
+                if CmhAtu == img :
+                    Ldados[c]['face_Encoded'] = encodeIMG
+                conter -= 1
+    with open (caminhoJson, 'w', encoding='utf-8') as arquivo:
+        json.dump(Ldados , arquivo)
+
+
+diretorio_base = '../arquivos/imagens'
+caminhosIMG = CmhsJson()
+ExistIMG = list_subdirectories(diretorio_base)
+IMGalvo = existent_paths(ExistIMG, caminhosIMG)
+
+
+ft_encod = []
+for c in IMGalvo:
+    imgEnt = fr.load_image_file(c)
+    encodeIMG = fr.face_encodings(imgEnt)[0]
+    ft_encod.append([encodeIMG, c])
+
+for e in ft_encod:
+    addEncod(e[1], e[0].tolist())
+    ApagaCaminho(e[1])
+    print('Adicionado')

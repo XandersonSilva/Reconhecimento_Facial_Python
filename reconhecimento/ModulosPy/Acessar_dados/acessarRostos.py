@@ -12,7 +12,7 @@ for i in dados:
     Ldados.append(i)
 
 def R_encods_Get():
-    #Procurando o caminho das fotos na estrutura de cada indice
+    # Procurando os dados extraídos das fotos no registro de cada usurário
     encods = []
     quant = len(Ldados)
     

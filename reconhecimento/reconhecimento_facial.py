@@ -12,9 +12,10 @@ with open('inicializar.json', 'r') as dado:
     DadoC = json.load(dado)
 Escolha = DadoC['comeca']
 
-#imgAluno = "../armazenamento/arquivos/imagens/Dev_X/Dev_X_F02.jpg" #Foto em armazenamento local
-#imgEnt = fr.load_image_file(imgAluno)
-#encodeAluno = fr.face_encodings(imgEnt)[0]
+#ESTRUTURA UTILIZADA PARA ENCODAR APENAS UMA IMAGEM:
+#   imgAluno = "../armazenamento/arquivos/imagens/Dev_X/Dev_X_F02.jpg" #Foto em armazenamento local
+#   imgEnt = fr.load_image_file(imgAluno)
+#   encodeAluno = fr.face_encodings(imgEnt)[0]
 
 #REALIZAR TESTES PARA VERIFICAR SE É MELHOR COM OU SEM
 #imgAluno = cv2.cvtColor(imgAluno,cv2.COLOR_BGR2RGB)   #Faz as alterações de cor da imagem

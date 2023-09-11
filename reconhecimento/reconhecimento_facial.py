@@ -4,7 +4,7 @@ import face_recognition as fr
 from ModulosPy.Inicializar.inicializar import ini
 from ModulosPy.WebCamPC.WebCam import Rec
 from ModulosPy.Cam_Mobile.Mobile_cam import MobileRec 
-
+from ModulosPy.Acessar_dados.acessarRostos import R_encods_Get
 ini() #Pergunta se a câmera a ser utilizada será local(com fio) ou remota (sem fio) [TEMPORARIO]
 
 #arq_dadoCamAtu = 'inicializar.json'
@@ -12,18 +12,15 @@ with open('inicializar.json', 'r') as dado:
     DadoC = json.load(dado)
 Escolha = DadoC['comeca']
 
-imgAluno = "../armazenamento/arquivos/imagens/Dev_X/Dev_X_F02.jpg"
-
-
-imgEnt = fr.load_image_file(imgAluno)
+#imgAluno = "../armazenamento/arquivos/imagens/Dev_X/Dev_X_F02.jpg" #Foto em armazenamento local
+#imgEnt = fr.load_image_file(imgAluno)
+#encodeAluno = fr.face_encodings(imgEnt)[0]
 
 #REALIZAR TESTES PARA VERIFICAR SE É MELHOR COM OU SEM
-#Faz as alterações de cor da imagem
-#imgAluno = cv2.cvtColor(imgAluno,cv2.COLOR_BGR2RGB)
+#imgAluno = cv2.cvtColor(imgAluno,cv2.COLOR_BGR2RGB)   #Faz as alterações de cor da imagem
 
-#Pega os pontos do rosto da imagem
-encodeAluno = fr.face_encodings(imgEnt)[0]
-
+#Pega os pontos do rosto da imagem do json
+encodeAluno = R_encods_Get()
 
 while True:
 
@@ -45,22 +42,23 @@ while True:
     for f in range(0, Quant):
         encodeCam = fremL[f]
 
-        #COMPARACAO
-        if fremL[f] != [] and fremL[f] != 0:
-            try:
-                #Realiza a comparação dos rostos e a distância entre eles
-                compr = fr.compare_faces([encodeAluno], encodeCam[0])
-                distancia = fr.face_distance([encodeAluno], encodeCam[0])
-                #Printa se é a mesma pessoa, e a distância dos valores dos rostos.
-                if(distancia <= 0.5):
-                    print('MESMA PESSOA')
-                    print(distancia)
+            #COMPARACAO
+        for c in range(len(encodeAluno)):
+            if fremL[f] != [] and fremL[f] != 0:
+                try:
+                    #Realiza a comparação dos rostos e a distância entre eles
+                    compr = fr.compare_faces([encodeAluno[c][0]], encodeCam[0])
+                    distancia = fr.face_distance([encodeAluno[c][0]], encodeCam[0])
+                    #Printa se é a mesma pessoa, e a distância dos valores dos rostos.
+                    if(distancia <= 0.5):
+                        print(f'{encodeAluno[c][1]} Detectado!')
+                        print('Distancia: ', distancia)
 
-                else:
-                #Printa se é a mesma pessoa, e a distância dos valores dos rostos.
-                    print('DIFERENTE')
-                    print(distancia)
-            except:
-                print(f"Não foi possível detectar alguém na imagem")
-        else:
-            print('Nenhum rosto encontrado!')
+                    else:
+                    #Printa se é a mesma pessoa, e a distância dos valores dos rostos.
+                        print('DIFERENTE')
+                        print(distancia)
+                except:
+                    print(f"Não foi possível detectar alguém na imagem")
+            else:
+                print('Nenhum rosto encontrado!')

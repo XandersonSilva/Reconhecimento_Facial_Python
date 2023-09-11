@@ -61,7 +61,7 @@ def ini():
             
         root.destroy()
 
-        arquivo = '../reconhecimento/inicializar.json'
+        arquivo = 'inicializar.json'
         conteudo = {'comeca': escolha}
 
         with open(arquivo, 'w', encoding='utf-8') as inicio:

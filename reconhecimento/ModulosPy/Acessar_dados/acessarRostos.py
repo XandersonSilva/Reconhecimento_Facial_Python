@@ -1,7 +1,7 @@
 import json
 import numpy
 
-caminhoJson = '../../../armazenamento/Dados_Imagens/dados.json'
+caminhoJson = '/home/silvestre/Documentos/GitHub/Reconhecimento_Facial_Python/armazenamento/Dados_Imagens/dados.json'
 with open( caminhoJson, 'r', encoding='utf-8') as info:
     #Transformando os dados do json em um dicionario python
     dados = json.load(info)

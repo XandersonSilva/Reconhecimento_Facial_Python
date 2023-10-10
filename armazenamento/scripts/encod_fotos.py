@@ -2,8 +2,9 @@ import face_recognition as fr
 import json
 import numpy as np
 from acessar_paths import *
+n1 = input('Informe o diretório das fotos: ')
 
-caminhoJson = '../Dados_Imagens/dados.json'
+caminhoJson = 'armazenamento/Dados_Imagens/dados.json'
 with open( caminhoJson, 'r', encoding='utf-8') as info:
     #Transformando os dados do json em um dicionario python
     dados = json.load(info)
@@ -55,7 +56,7 @@ def addEncod(img, encodeIMG):
         json.dump(Ldados , arquivo)
 
 
-diretorio_base = '../arquivos/imagens'
+diretorio_base = n1
 caminhosIMG = CmhsJson()
 ExistIMG = list_subdirectories(diretorio_base)
 IMGalvo = existent_paths(ExistIMG, caminhosIMG)

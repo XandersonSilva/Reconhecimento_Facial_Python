@@ -1,11 +1,5 @@
 <?php 
-    //VERIFICA SE O USUÁRIO JÁ ESTÁ LOGADO, CASO NÃO ESTEJA, REDIRECIONA PARA LOGIN
-    session_start();
-    if ((!isset($_SESSION['logado']) == true)){
-        unset($_SESSION['logado']);
-        session_destroy();
-        header('Location: ../Cadastro_Login/login.php');
-    }
+    require('../ScriptsPHP/verificar_logado.php')
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -32,25 +26,25 @@
 <br>
 
 <body class="bg-dark">
-    <div class="card text-center">
-    <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-            <a class="nav-link " href="./add_user_P.php">Adicionar permanente</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="true" href="./add_user_T.php">Adicionar temporário</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./codificar.php">Codificar fotos</a>
-        </li>
-        </ul>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Adicionar usuário temporário</h5>
-        <p class="card-text">Em desenvolvimento...</p>
-        <a href="#" class="btn btn-primary">Adicionar</a>
-    </div>
+    <div class="card text-center container" style="width: 50em;">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link " href="./add_user_P.php">Adicionar permanente</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" href="./add_user_T.php">Adicionar temporário</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./codificar.php">Codificar fotos</a>
+            </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Adicionar usuário temporário</h5>
+            <p class="card-text">Em desenvolvimento...</p>
+            <a href="#" class="btn btn-info">Adicionar</a>
+        </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

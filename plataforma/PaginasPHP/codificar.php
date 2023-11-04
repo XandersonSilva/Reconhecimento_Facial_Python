@@ -1,11 +1,5 @@
 <?php 
-    //VERIFICA SE O USUÁRIO JÁ ESTÁ LOGADO, CASO NÃO ESTEJA, REDIRECIONA PARA LOGIN
-    session_start();
-    if ((!isset($_SESSION['logado']) == true)){
-        unset($_SESSION['logado']);
-        session_destroy();
-        header('Location: ../Cadastro_Login/login.php');
-    }
+    require('../ScriptsPHP/verificar_logado.php')
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -32,34 +26,43 @@
 <br>
 
 <body class="bg-dark">
-    <div class="card text-center">
-    <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="./add_user_P.php">Adicionar permanente</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./add_user_T.php">Adicionar temporário</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="true" href="./codificar.php">Codificar fotos</a>
-        </li>
-        </ul>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Codificar fotos</h5>
-        <p class="card-text">Ao clicar, será codificada todas as fotos que estão no banco de dados com o estado pendente.</p>
-        <form action="" method="POST">
-            <input type="submit" class="btn btn-primary" value="Adicionar">
-        </form>
-        <br>    
-        <?php 
-            if($_SERVER['REQUEST_METHOD'] === 'POST'){
-                $response = file_get_contents('http://localhost:5000/validate?OK=OK');
-                echo $response;
-            }
-        ?>
-    </div>
+    <div class="card text-center container" style="width: 50em;">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="./add_user_P.php">Adicionar permanente</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./add_user_T.php">Adicionar temporário</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" href="./codificar.php">Codificar fotos</a>
+            </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Codificar fotos</h5>
+            <p class="card-text">Ao clicar, será codificada todas as fotos que estão no banco de dados com o estado pendente.</p>
+            <form action="" method="POST">
+                <input type="submit" class="btn btn-info" value="Codificar">
+            </form>
+            <br>    
+            <?php 
+                if($_SERVER['REQUEST_METHOD'] === 'POST'){
+                    try {
+                        $response = @file_get_contents('http://localhost:5000/validate?OK=OK');
+                        if ($response === false) {
+                            throw new Exception('Servidor fora do ar');
+                        }
+                        else{
+                            echo $response;
+                        }
+                    } catch (Exception $e) {
+                        echo "<div class='alert alert-danger text-center  border border-danger'>Erro interno do servidor.</div>";
+                    }
+                }
+            ?>
+        </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

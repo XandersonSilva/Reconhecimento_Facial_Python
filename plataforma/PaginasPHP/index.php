@@ -1,13 +1,6 @@
 <?php 
-    //VERIFICA SE O USUÁRIO JÁ ESTÁ LOGADO, CASO NÃO ESTEJA, REDIRECIONA PARA LOGIN
-    session_start();
-    if ((!isset($_SESSION['logado']) == true)){
-        unset($_SESSION['logado']);
-        session_destroy();
-        header('Location: ../Cadastro_Login/login.php');
-    }
-
-    ?>
+    require('../ScriptsPHP/verificar_logado.php')
+?>
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,7 +49,7 @@
                         <li class="list-group-item">Editar usuário</li>
                         <li class="list-group-item">Excluir usuário</li>
                         <li class="list-group-item">Logs de usuário</li>
-                        <li class="list-group-item"><a href="check_user.php" class="btn btn-info">Acessar</a></li>
+                        <li class="list-group-item"><a href="edit_user.php" class="btn btn-info">Acessar</a></li>
                     </ul>
             </div>
         </div>

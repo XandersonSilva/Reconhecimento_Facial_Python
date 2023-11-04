@@ -21,7 +21,7 @@ $vazio1 = array();
 
 
 if ($pessoas == $vazio0 or $pessoas == $vazio1 or $definido == 0){
-    header("Location: ../Cadastro_Login/login.php?erro=Nregistrado");
+    header("Location: ../Cadastro_Login/index.php?erro=Nregistrado");
     exit;
 }
 
@@ -40,7 +40,7 @@ foreach ($pessoas as $pessoa) {
 $usserAtu = urlencode($usserAtu);
 
 if ($usuarioValid == 0){
-    header("Location: ../Cadastro_Login/login.php?erro=Nregistrado");
+    header("Location: ../Cadastro_Login/index.php?erro=Nregistrado");
 }else{
     //Define os cookies de sessão necessários, e confirma que o usuário está logado através de sessão
     session_start();

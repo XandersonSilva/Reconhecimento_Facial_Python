@@ -18,8 +18,8 @@ def validate():
     else:
         asd = teste()
         if asd == 0:
-            return "<h1>Sem fotos para adicionar</h1>"
+            return '<div class=\'alert alert-warning text-center  border border-warning\'>Sem fotos para adicionar.</div>'
         elif asd == 1:
-            return "<h1>Foto adicionada</h1>"
+            return '<div class=\'alert alert-success text-center  border border-success\'>Foto adicionada com sucesso.</div>'
 if __name__ == '__main__':
     app.run()

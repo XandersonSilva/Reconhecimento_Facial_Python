@@ -9,11 +9,16 @@ sys.path.append("armazenamento/scripts")
 
 from armazenamento.scripts.encod_fotos import teste
 
+def key():
+    with open("key.json", "r") as thekey:
+            key = thekey.read()
+            return key
+
 app = Flask(__name__)
 
 @app.route('/validate', methods=['GET'])
 def validate():
-    if request.full_path != "/validate?OK=OK":
+    if request.full_path != "/validate?OK=" + key():
          return abort(403)
     else:
         asd = teste()

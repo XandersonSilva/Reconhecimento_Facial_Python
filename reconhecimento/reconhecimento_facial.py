@@ -1,6 +1,6 @@
 import cv2
 import face_recognition as fr
-import os
+from datetime import datetime
 import json
 
 with open("armazenamento/Dados_Imagens/dados.json", 'r') as arquivo:
@@ -46,6 +46,22 @@ if RE == True:
             print('IDENTIFICADO ALUNO: ' + img)
             print(distancia)
             print('=================================')
+            
+            try:
+                def create():
+                    with open("armazenamento/LOGS/" + img + '.log', 'r+', encoding='UTF-8') as saves:
+                        save = saves.read()
+
+                    with open("armazenamento/LOGS/" + img + '.log', 'w') as logs:
+                        LOG = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+                        logs.write(save + '\n' + LOG)
+                create()
+            
+            except:
+                achive = open('armazenamento/LOGS/'+img+'.log', 'w+')
+                achive.writelines(datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
+                achive.close()
+
             break
 
         else:

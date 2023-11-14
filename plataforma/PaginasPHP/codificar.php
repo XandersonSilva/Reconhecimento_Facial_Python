@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar usuário</title> 
+    <title>Codificar fotos</title> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
@@ -50,7 +50,18 @@
             <?php 
                 if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     try {
-                        $response = @file_get_contents('http://localhost:5000/validate?OK=OK');
+                        $key = rand(1000, 9999);
+
+                        $BD = '../../key.json';
+
+                        $novo_Val = (
+                            $key
+                        );
+
+                        $NBD = json_encode($novo_Val);
+                        file_put_contents($BD, $NBD);
+
+                        $response = @file_get_contents("http://localhost:5000/validate?OK=$key");
                         if ($response === false) {
                             throw new Exception('Servidor fora do ar');
                         }

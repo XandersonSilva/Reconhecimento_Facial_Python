@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar usuário</title> 
+    <title>Editar usuário</title> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
@@ -42,8 +42,12 @@
         </div>
         <div class="card-body">
             <h5 class="card-title">Editar usuário</h5>
-            <p class="card-text">Em desenvolvimento...</p>
-            <a href="#" class="btn btn-info">Editar</a>
+            <form action="" method="post">
+                <label for="search">Nome do usuário: </label>
+                <input type="search" name="log" placeholder="Nome do usuário">
+                <input type="submit" value="Procurar" class="btn btn-info">
+                <p>Em andamento...</p>
+            </form>
         </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

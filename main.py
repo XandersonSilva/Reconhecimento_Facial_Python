@@ -18,6 +18,7 @@ app = Flask(__name__)
 
 @app.route('/validate', methods=['GET'])
 def validate():
+    print(request.full_path)
     if request.full_path != "/validate?OK=" + key():
          return abort(403)
     else:

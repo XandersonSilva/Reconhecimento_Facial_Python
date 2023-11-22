@@ -1,5 +1,13 @@
 <?php
-require('./verificar_logado.php');
+// Usando a extensão PDO para criar uma conexão com o banco
+// Caminho relativo para o banco de dados SQLite (dois níveis acima)
+$dbPathRelativo = '../../armazenamento/Banco_comSQLite/banco.db';
+
+// Caminho completo usando __DIR__ que retorna a localização do arquivo atual
+$bdPath = __DIR__ . '/' . $dbPathRelativo;
+// instância do PDO com o caminho final
+$db = new PDO('sqlite:' . $bdPath);
+
 
 
 if(isset($_POST['add'])) {
@@ -10,10 +18,10 @@ if(isset($_POST['add'])) {
     $extensão = $_FILES['foto']['name'];
     $extensão = pathinfo($extensão, PATHINFO_EXTENSION);
     echo $extensão;
-    if(isset($_FILES['foto']) && !empty($_FILES['foto']) && !$_FILES['foto']['error']){
+    if(isset($_FILES['foto']) && !empty($_FILES['foto']) && !$_FILES['foto']['error'])
+    {
         if($extensão == 'png'){
             move_uploaded_file($_FILES['foto']["tmp_name"] , "../../armazenamento/fotos/". $matricula . ".png");
-            header('Location: ../PaginasPHP/add_user_P.php?ADD=Add');
         }
         else{
             header('Location: ../PaginasPHP/add_user_P.php?ADD=Ext');
@@ -25,29 +33,54 @@ if(isset($_POST['add'])) {
     }
 }
 
+$nome = $nome;
+$tipo = $tipo;
+$cargo_turma = $CT;
+$num  = $matricula;
+$Caminho_das_fotos = ["/opt/lampp/htdocs/sites/Reconhecimento_Facial_Python/armazenamento/fotos/$matricula.png"];
+//$face_Encoded = [];
 
-$BD = '../../armazenamento/Dados_Imagens/dados.json';
-
-$val = json_decode(file_get_contents($BD));
-
-$novo_Val = array(array(
-    "num" => $matricula,
-    "nome" => $nome,
-    "tipo" => $tipo,
-    "cargo/turma" => $CT,
-    "Caminho_das_fotos" => ["/opt/lampp/htdocs/sites/Reconhecimento_Facial_Python/armazenamento/fotos/$matricula.png"],
-    "face_Encoded" => []
-));
-
-$NBD = json_encode(array_merge($val, $novo_Val));
-
-if($NBD === false){
-    die('Erro na codificação do JSON.');
+if($tipo == $cargo_turma){
+    $query =  "insert into usuario(
+        nome,
+        funcao,
+        numero_identificacao_pessoal,
+        imagemURL
+        ) 
+        values(
+            '$nome' ,
+            '$tipo' ,
+            '$num'  ,
+            '$Caminho_das_fotos[0]'
+        );
+        ";
+        
+        
+    }else{
+        echo $valores;
+        $query =  "insert into usuario(
+            nome,
+            funcao,
+            turma,
+            matricula,
+            imagemURL
+            ) 
+            values(
+                '$nome'       ,
+                '$tipo'       ,
+                '$cargo_turma',
+                '$num'        ,
+                '$Caminho_das_fotos[0]' 
+            );";
+            
 }
-elseif(file_put_contents($BD, $NBD)){
-    echo 'Informações adicionadas com sucesso no JSON.';
-} 
-else{
-    echo 'Erro ao escrever no arquivo JSON.';
+
+try{
+    $result = $db->exec($query);
+    header('Location: ../PaginasPHP/add_user_P.php?ADD=Add');
+} catch (PDOException $e) {
+    echo "Erro: " . $e->getMessage();
+    
 }
+
 ?>

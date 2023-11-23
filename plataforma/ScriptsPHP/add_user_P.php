@@ -37,7 +37,7 @@ $nome = $nome;
 $tipo = $tipo;
 $cargo_turma = $CT;
 $num  = $matricula;
-$Caminho_das_fotos = ["/opt/lampp/htdocs/sites/Reconhecimento_Facial_Python/armazenamento/fotos/$matricula.png"];
+$Caminho_das_fotos = ["/fotos/$matricula.png"];
 //$face_Encoded = [];
 
 if($tipo == $cargo_turma){
@@ -45,13 +45,15 @@ if($tipo == $cargo_turma){
         nome,
         funcao,
         numero_identificacao_pessoal,
-        imagemURL
+        imagemURL,
+        presente
         ) 
         values(
             '$nome' ,
             '$tipo' ,
             '$num'  ,
-            '$Caminho_das_fotos[0]'
+            '$Caminho_das_fotos[0]',
+            0
         );
         ";
         
@@ -63,14 +65,16 @@ if($tipo == $cargo_turma){
             funcao,
             turma,
             matricula,
-            imagemURL
+            imagemURL,
+            presente
             ) 
             values(
                 '$nome'       ,
                 '$tipo'       ,
                 '$cargo_turma',
                 '$num'        ,
-                '$Caminho_das_fotos[0]' 
+                '$Caminho_das_fotos[0]',
+                0
             );";
             
 }

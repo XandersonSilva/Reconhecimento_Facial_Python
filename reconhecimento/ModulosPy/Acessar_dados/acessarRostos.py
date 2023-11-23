@@ -1,7 +1,15 @@
 import json
 import numpy
+from pathlib import Path
+import sys
+#Não sei debugar do geito certo então fiz assim para parar o arquivo em pontos necessarios
+#print('ERRO')
+#sys.exit()
 
-caminhoJson = '/home/silvestre/Documentos/GitHub/Reconhecimento_Facial_Python/armazenamento/Dados_Imagens/dados.json'
+# Obtém o diretório atual do arquivo
+diretorio_atual = str(Path(__file__).resolve().parent)
+
+caminhoJson = diretorio_atual + '/../../../armazenamento/Dados_Imagens/dados.json'
 with open( caminhoJson, 'r', encoding='utf-8') as info:
     #Transformando os dados do json em um dicionario python
     dados = json.load(info)

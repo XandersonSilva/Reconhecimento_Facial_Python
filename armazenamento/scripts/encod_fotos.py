@@ -1,77 +1,76 @@
 import face_recognition as fr
 import json
-import numpy as np
-from acessar_paths import *
-def teste():
-    #Informe o caminho completo do diretório das fotos
-    n1 = "/opt/lampp/htdocs/sites/Reconhecimento_Facial_Python/armazenamento/fotos"  
-    n = 0
-    caminhoJson = 'armazenamento/Dados_Imagens/dados.json'
-    with open( caminhoJson, 'r', encoding='utf-8') as info:
-        #Transformando os dados do json em um dicionario python
-        dados = json.load(info)
+from acessar_paths import *  # Importa funções personalizadas para manipulação de caminhos
+import sqlite3  # Para executar esse código é necessário ter a extensão sqlite3
+from pathlib import Path
+import sys
 
-    Ldados = []
-        #Jogando os dados do dicionario em indices de uma lista
-    for i in dados:
-        Ldados.append(i)
-            
-    def CmhsJson():
-        #Procurando o caminho das fotos na estrutura de cada indice
+# Obtém o diretório atual do arquivo
+diretorio_atual = str(Path(__file__).resolve().parent)
+
+# Conecta ao banco de dados SQLite
+banco = sqlite3.connect(diretorio_atual + '/../Banco_comSQLite/banco.db')
+cursor = banco.cursor()
+
+# Cria o caminho completo do diretório das fotos dinamicamente
+diretorio_base = diretorio_atual + "/.."
+
+# Coleta os dados da tabela usuario
+cursor.execute('select id, imagemURL, pontos from usuario where pontos is null and  imagemURL is not null')
+Ldados = cursor.fetchall()
+
+# Define uma função chamada teste()
+def teste():
+    n = 0  # Variável utilizada para controle de alguma condição
+
+    # Define uma função interna chamada ImagensURL()
+    def ImagensURL():
+        # Procura o caminho das fotos na estrutura de cada índice
         caminhos = []
         quant = len(Ldados)
         for c in range(0, quant):
-            Lcaminhos = Ldados[c]['Caminho_das_fotos']
-            if Lcaminhos != 0:
-                for f in range (len(Lcaminhos)):
-                    caminhos.append(Lcaminhos[f])
+            Lcaminhos = Ldados[c][1]
+            if Lcaminhos != 'None':
+                caminhos.append(Lcaminhos)
         return caminhos
 
+    # Define uma função interna chamada ApagaCaminho()
     def ApagaCaminho(Apagar):
         quant = len(Ldados)
         for c in range(0, quant):
-            Lcaminhos = Ldados[c]['Caminho_das_fotos']
-            quantCmnh =  len(Lcaminhos)
-            if quantCmnh > 0:
-                conter = quantCmnh - 1
-                while conter >= 0:
-                    CmhAtu =  Ldados[c]['Caminho_das_fotos'][conter]
-                    if CmhAtu == Apagar :
-                        Ldados[c]['Caminho_das_fotos'].pop(conter)
-                    conter -= 1
-        with open (caminhoJson, 'w', encoding='utf-8') as arquivo:
-            json.dump(Ldados , arquivo)
-    j = []
+            if Ldados[c][1] == Apagar:
+                cursor.execute(f'update usuario set imagemURL = NULL where imagemURL = "{Apagar}"')
+                banco.commit()
+
+    j = []  # Lista vazia, parece que não está sendo utilizada no código, eu não faço ideia da utilidade dela
+
+    # Define uma função interna chamada addEncod()
     def addEncod(img, encodeIMG):
-        quant = len(Ldados)
-        for c in range(0, quant):
-            Lcaminhos = Ldados[c]['Caminho_das_fotos']
-            quantCmnh =  len(Lcaminhos)
-            if quantCmnh > 0:
-                conter = quantCmnh - 1
-                while conter >= 0:
-                    CmhAtu =  Ldados[c]['Caminho_das_fotos'][conter]
-                    if CmhAtu == img :
-                        Ldados[c]['face_Encoded'] = encodeIMG
-                    conter -= 1
-        with open (caminhoJson, 'w', encoding='utf-8') as arquivo:
-            json.dump(Ldados , arquivo)
+        cursor.execute(f'update usuario set pontos = "{encodeIMG}" where imagemURL = "{img}"')
+        banco.commit()
 
-
-    diretorio_base = n1
-    caminhosIMG = CmhsJson()
+    # Obtém uma lista de caminhos das imagens
+    caminhosIMG = ImagensURL()
+    # Obtém a existência de caminhos em um diretório base
     ExistIMG = list_subdirectories(diretorio_base)
-    IMGalvo = existent_paths(ExistIMG, caminhosIMG)
+    # Obtém os caminhos existentes
+    IMGalvo = existent_paths(ExistIMG, caminhosIMG, diretorio_base)
 
-    
     ft_encod = []
+
+    # Itera sobre os caminhos das imagens
     for c in IMGalvo:
-        imgEnt = fr.load_image_file(c)
+        # Carrega a imagem utilizando a biblioteca face_recognition
+        imgEnt = fr.load_image_file((diretorio_base + c))
+        # Obtém as codificações faciais da imagem
         encodeIMG = fr.face_encodings(imgEnt)[0]
         ft_encod.append([encodeIMG, c])
 
+    # Itera sobre as codificações faciais e adiciona ao banco de dados
     for e in ft_encod:
         addEncod(e[1], e[0].tolist())
         ApagaCaminho(e[1])
-        n = 1
+        n = 1  # Atualiza a variável de controle
+
+    # Retorna o valor da variável de controle
     return n

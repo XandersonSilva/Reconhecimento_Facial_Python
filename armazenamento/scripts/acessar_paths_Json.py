@@ -60,10 +60,10 @@ def list_subdirectories(directory):
     return list_subdirs
 
 # Função para encontrar caminhos existentes
-def existent_paths(exist_paths, to_check, diretorio_base):
+def existent_paths(exist_paths, to_check):
     exist = []
     for c in to_check:
-        if (diretorio_base + c) in exist_paths:
+        if  c in exist_paths:
             exist.append(c)
     return exist
 

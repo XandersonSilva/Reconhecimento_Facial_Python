@@ -5,22 +5,22 @@ import sqlite3  # Para executar esse código é necessário ter a extensão sqli
 from pathlib import Path
 import sys
 
-# Obtém o diretório atual do arquivo
-diretorio_atual = str(Path(__file__).resolve().parent)
-
-# Conecta ao banco de dados SQLite
-banco = sqlite3.connect(diretorio_atual + '/../Banco_comSQLite/banco.db')
-cursor = banco.cursor()
-
-# Cria o caminho completo do diretório das fotos dinamicamente
-diretorio_base = diretorio_atual + "/.."
-
-# Coleta os dados da tabela usuario
-cursor.execute('select id, imagemURL, pontos from usuario where pontos is null and  imagemURL is not null')
-Ldados = cursor.fetchall()
 
 # Define uma função chamada teste()
 def teste():
+    # Obtém o diretório atual do arquivo
+    diretorio_atual = str(Path(__file__).resolve().parent)
+
+    # Conecta ao banco de dados SQLite
+    banco = sqlite3.connect(diretorio_atual + '/../Banco_comSQLite/banco.db')
+    cursor = banco.cursor()
+
+    # Cria o caminho completo do diretório das fotos dinamicamente
+    diretorio_base = diretorio_atual + "/.."
+
+    # Coleta os dados da tabela usuario
+    cursor.execute('select id, imagemURL, pontos from usuario where pontos is null and  imagemURL is not null')
+    Ldados = cursor.fetchall()
     n = 0  # Variável utilizada para controle de alguma condição
 
     # Define uma função interna chamada ImagensURL()

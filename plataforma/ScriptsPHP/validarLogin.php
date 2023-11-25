@@ -21,9 +21,10 @@ $senha = trim($_POST['Senha']) ?? '';
 $definido = 0;
 $usuarioValid = 0;
 
+
 // Percorrer os objetos do array e fazer verificações
 foreach ($result as $row) {
-    if(($senha == $row['chave_de_acesso']) && $row['email'] == $email) {
+    if(password_verify($senha, $row['chave_de_acesso']) && $row['email'] == $email){
         $usuarioValid ++;
         if(isset($row['nome'])){
             $usserAtu      = $row['nome'];

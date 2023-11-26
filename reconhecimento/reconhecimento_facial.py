@@ -5,8 +5,11 @@ import ast
 import sqlite3
 from pathlib import Path
 
+# Obtém o diretório atual do arquivo
+diretorio_atual = str(Path(__file__).resolve().parent)
+
 # Conecta ao banco de dados SQLite
-banco = sqlite3.connect('./armazenamento/Banco_comSQLite/banco.db')
+banco = sqlite3.connect(diretorio_atual + '/../armazenamento/Banco_comSQLite/banco.db')
 cursor = banco.cursor()
 
 # Coleta os dados da tabela usuario
@@ -64,16 +67,16 @@ if RE == True:
             #CRIA LOGS DE ACESSO AINDA COM JSON
             try:
                 def create():
-                    with open("armazenamento/LOGS/" + nome + '.log', 'r+', encoding='UTF-8') as saves:
+                    with open(diretorio_atual + "/../armazenamento/LOGS/" + nome + '.log', 'r+', encoding='UTF-8') as saves:
                         save = saves.read()
 
-                    with open("armazenamento/LOGS/" + nome + '.log', 'w') as logs:
+                    with open(diretorio_atual + "/../armazenamento/LOGS/" + nome + '.log', 'w') as logs:
                         LOG = "<br> "+datetime.now().strftime('%d/%m/%Y %H:%M:%S')
                         logs.write(LOG + '\n' + save)
                 create()
             
             except:
-                achive = open('armazenamento/LOGS/'+nome+'.log', 'w+')
+                achive = open(diretorio_atual + '/../armazenamento/LOGS/'+nome+'.log', 'w+')
                 achive.writelines("<br> "+datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
                 achive.close()
 

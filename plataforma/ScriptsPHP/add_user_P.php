@@ -59,7 +59,6 @@ if($tipo == $cargo_turma){
         
         
     }else{
-        echo $valores;
         $query =  "insert into usuario(
             nome,
             funcao,

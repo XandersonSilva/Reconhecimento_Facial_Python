@@ -78,7 +78,7 @@
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Foto: </label>
                         <br>
-                    <input type="file" name="foto" accept="image/*">
+                    <input type="file" name="foto" onchange="checkFileSize()"  id="fotoUsr" accept="image/png">
                 </div>
                     <input name="add" type="submit" value="Adicionar" class="btn btn-info">
                     <br>
@@ -103,5 +103,22 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+     function checkFileSize() {
+            var fileInput = document.getElementById('fotoUsr');
+            var maxSize = 2 * 1024 * 1024; // 2 megabytes
+            
+            if (fileInput.files.length > 0) {
+                var fileSize = fileInput.files[0].size;
+                
+                if (fileSize > maxSize) {
+                    alert('O arquivo excede o tamanho máximo permitido.');
+                    // Limpar o campo de arquivo se o tamanho for excedido
+                    fileInput.value = '';
+                }
+            }
+     }
+    
+</script>
 </body>
 </html>

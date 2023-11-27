@@ -43,25 +43,45 @@
         <div class="card-body">
             <h5 class="card-title">LOGS de usuário</h5>
             <form action="" method="post">
-                <label for="search">Nome do usuário: </label>
-                <input type="search" name="log" placeholder="Nome do usuário">
+                <label for="search">CPF do usuário: </label>
+                <input type="search" name="log" placeholder="CPF do usuário">
                 <input type="submit" value="Procurar" class="btn btn-info">
+
                 <?php 
 
                 $nome = $_POST['log'] ?? '';
+                $log = $nome;
 
                 if($nome != ''){
-                        if(!file_exists("../../armazenamento/LOGS/$nome.log")){
-                            echo "<div class='alert alert-danger text-center  border border-danger'>LOGS de usuário não encontrado.</div>";
-                            die;
+                    try{
+                        // Usando a extensão PDO para criar uma conexão com o banco
+                        // Caminho relativo para o banco de dados SQLite (dois níveis acima)
+                        $dbPathRelativo = '../../armazenamento/Banco_comSQLite/banco.db';
+
+                        // Caminho completo usando __DIR__ que retorna a localização do arquivo atual
+                        $bdPath = __DIR__ . '/' . $dbPathRelativo;
+                        // instância do PDO com o caminho final
+                        $db = new PDO('sqlite:' . $bdPath);
+
+                        $query =  "SELECT * from logs where cpf = $log ORDER BY dataLog DESC";
+                        $query2 =  "SELECT nome from usuario where cpf = $log"; 
+
+                        $result = $db->query($query);
+                        $result2 = $db->query($query2);
+
+                        $row = $result->fetch(PDO::FETCH_ASSOC);
+                        $row2 = $result2->fetch(PDO::FETCH_ASSOC);
+
+                        echo "<br>" . $row2['nome']."<br>";
+                        echo $row['dataLog']."Hr<br>";
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                            echo $row['dataLog']."Hr<br>";
                         }
-                        else{
-                            $BD = fopen("../../armazenamento/LOGS/$nome.log", "r");
-                            $json = fread($BD, filesize("../../armazenamento/LOGS/$nome.log"));
-                            echo "<br>".$nome;
-                            echo $json;
-                        }
+                    }catch(PDOException $e){
+                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">LOG não encotrado.</div>';
+                    }
                 }
+                
 
                 ?>
             </form>

@@ -59,27 +59,20 @@ if RE == True:
             cursor = banco.cursor()
             cursor.execute('select nome from usuario where id = ' + str(id[j]))
             nome = cursor.fetchall()[0][0]
+            cursor.execute('select cpf from usuario where id = ' + str(id[j]))
+            CPF = cursor.fetchall()[0][0]
             print('=================================')
             print('IDENTIFICADO ALUNO: ' + nome)
             print(distancia)
             print('=================================')
 
             #CRIA LOGS DE ACESSO AINDA COM JSON
-            try:
-                def create():
-                    with open(diretorio_atual + "/../armazenamento/LOGS/" + nome + '.log', 'r+', encoding='UTF-8') as saves:
-                        save = saves.read()
+            # Conecta ao banco de dados SQLite
 
-                    with open(diretorio_atual + "/../armazenamento/LOGS/" + nome + '.log', 'w') as logs:
-                        LOG = "<br> "+datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-                        logs.write(LOG + '\n' + save)
-                create()
-            
-            except:
-                achive = open(diretorio_atual + '/../armazenamento/LOGS/'+nome+'.log', 'w+')
-                achive.writelines("<br> "+datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
-                achive.close()
-
+            # Coleta os dados da tabela usuario
+            cursor.execute('INSERT INTO logs(dataLog, cpf) values("'+ datetime.now().strftime('%d/%m/%Y %H') + '",' + str(CPF) + ')')
+            Llogs = cursor.fetchall()
+            banco.commit()
             break #Caso retirado, é possível ver todos os alunos que "batem"
             
 

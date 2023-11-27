@@ -76,6 +76,10 @@
                     <input name="nome" type="text" class="form-control" id="exampleInputPassword1" required>
                 </div>
                 <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">CPF: </label>
+                    <input name="CPF" type="text" class="form-control" id="exampleInputPassword1" required>
+                </div>
+                <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Foto: </label>
                         <br>
                     <input type="file" name="foto" onchange="checkFileSize()"  id="fotoUsr" accept="image/png">

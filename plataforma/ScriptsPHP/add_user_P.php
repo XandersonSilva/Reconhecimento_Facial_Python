@@ -15,9 +15,9 @@ if(isset($_POST['add'])) {
     $nome = $_POST['nome'];
     $tipo = $_POST['tipo'];
     $CT = $POST['CT'];
+    $CPF = $_POST['CPF'];
     $extensão = $_FILES['foto']['name'];
     $extensão = pathinfo($extensão, PATHINFO_EXTENSION);
-    echo $extensão;
     if(isset($_FILES['foto']) && !empty($_FILES['foto']) && !$_FILES['foto']['error'])
     {
         if($extensão == 'png'){
@@ -33,6 +33,7 @@ if(isset($_POST['add'])) {
     }
 }
 
+$CPF = $CPF;
 $nome = $nome;
 $tipo = $tipo;
 $cargo_turma = $CT;
@@ -42,6 +43,7 @@ $Caminho_das_fotos = ["/fotos/$matricula.png"];
 
 if($tipo == $cargo_turma){
     $query =  "insert into usuario(
+        cpf,
         nome,
         funcao,
         numero_identificacao_pessoal,
@@ -49,6 +51,7 @@ if($tipo == $cargo_turma){
         presente
         ) 
         values(
+            '$CPF'  ,
             '$nome' ,
             '$tipo' ,
             '$num'  ,
@@ -60,6 +63,7 @@ if($tipo == $cargo_turma){
         
     }else{
         $query =  "insert into usuario(
+            cpf,
             nome,
             funcao,
             turma,
@@ -68,6 +72,7 @@ if($tipo == $cargo_turma){
             presente
             ) 
             values(
+                '$CPF'        ,
                 '$nome'       ,
                 '$tipo'       ,
                 '$cargo_turma',

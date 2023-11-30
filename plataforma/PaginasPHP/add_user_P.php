@@ -41,6 +41,20 @@
             </ul>
         </div>
         <div class="card-body">
+            <?php 
+                if(isset($_GET['ADD'])){
+                    if($_GET['ADD'] == "Add"){
+                        echo '<br><div class="alert alert-success text-center  border border-success" role="alert">Usuário adicionado com sucesso.</div>';
+                    }
+                    if($_GET['ADD'] == "Ext"){
+                        echo '<br><div class="alert alert-warning text-center  border border-warning" role="alert">Você não pode subir esse tipo de extensão. Apenas PNG</div>';
+                    }
+                    if($_GET['ADD'] == "Erro"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir a imagem.</div>';
+                    }
+                }
+                
+            ?>
             <h5 class="card-title">Adicionar usuário permanente</h5>
             <form action="../ScriptsPHP/add_user_P.php" method="post" class="card container text-left" style="width: 30em;" enctype="multipart/form-data">
                 <div class="mb-3">
@@ -87,20 +101,6 @@
                     <input name="add" type="submit" value="Adicionar" class="btn btn-info">
                     <br>
             </form>
-            <?php 
-                if(isset($_GET['ADD'])){
-                    if($_GET['ADD'] == "Add"){
-                        echo '<br><div class="alert alert-success text-center  border border-success" role="alert">Usuário adicionado com sucesso.</div>';
-                    }
-                    if($_GET['ADD'] == "Ext"){
-                        echo '<br><div class="alert alert-warning text-center  border border-warning" role="alert">Você não pode subir esse tipo de extensão. Apenas PNG</div>';
-                    }
-                    if($_GET['ADD'] == "Erro"){
-                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir a imagem.</div>';
-                    }
-                }
-                
-            ?>
             
         </div>
     </div>

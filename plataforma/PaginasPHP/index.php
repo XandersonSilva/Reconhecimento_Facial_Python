@@ -47,7 +47,7 @@
                     <ul class="list-group">
                         <li class="list-group-item bg-info text-light text-center h4" aria-current="true">Acessar usuário:</li>
                         <li class="list-group-item">Editar usuário</li>
-                        <li class="list-group-item">Excluir usuário</li>
+                        <li class="list-group-item">Logs por data</li>
                         <li class="list-group-item">Logs de usuário</li>
                         <li class="list-group-item"><a href="edit_user.php" class="btn btn-info">Acessar</a></li>
                     </ul>

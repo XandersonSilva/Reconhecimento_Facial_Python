@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGS de usuários</title> 
+    <title>LOGS data</title> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
@@ -33,26 +33,29 @@
                 <a class="nav-link" href="./edit_user.php">Editar usuário</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./logs_date.php">LOGS data</a>
+                <a class="nav-link active" aria-current="true"  href="./del_user.php">LOGS data</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="true"  href="./logs_user.php">LOGS de usuários</a>
+                <a class="nav-link" href="./logs_user.php">LOGS de usuários</a>
             </li>
             </ul>
         </div>
         <div class="card-body">
-            <h5 class="card-title">LOGS de usuário</h5>
+            <h5 class="card-title">LOGS por data</h5>
             <form action="" method="post">
-                <label for="search">CPF do usuário: </label>
-                <input type="number" name="log" placeholder="CPF do usuário">
+                <label for="search">Data e hora de acesso: </label>
+                <input type="date" name="date" required>
+                <input type="number" name="hora" required placeholder="Hora: 00">
                 <input type="submit" value="Procurar" class="btn btn-info">
             </form>
-                <?php 
+            <?php 
+            
+                $data = $_POST['date'] ?? '';
+                $data = date('d/m/Y', strtotime($data));
+                $hora = $_POST['hora'] ?? '';
+                $log = "$data $hora"; 
 
-                $nome = $_POST['log'] ?? '';
-                $log = $nome;
-
-                if($nome != ''){
+                if ($data != '' and $hora != ''){
                     try{
                         // Usando a extensão PDO para criar uma conexão com o banco
                         // Caminho relativo para o banco de dados SQLite (dois níveis acima)
@@ -62,38 +65,45 @@
                         $bdPath = __DIR__ . '/' . $dbPathRelativo;
                         // instância do PDO com o caminho final
                         $db = new PDO('sqlite:' . $bdPath);
-
-                        $query =  "SELECT * from logs where cpf = $log ORDER BY dataLog DESC";
-                        $query2 =  "SELECT nome from usuario where cpf = $log"; 
-
+                        
+                        $query =  "SELECT * from logs where dataLog = '$log'";
+                        
                         $result = $db->query($query);
-                        $result2 = $db->query($query2);
 
                         $row = $result->fetch(PDO::FETCH_ASSOC);
-                        $row2 = $result2->fetch(PDO::FETCH_ASSOC);
 
-                        
-                        if($row2 and $row){
+                        if($row){
                             echo"<table class='table table-striped'>
-                                    <thead>
-                                        <tr>
-                                        <th scope='col'>Data</th>
-                                        <th scope='col'>Nome</th>
-                                        </tr>
-                                </thead>
-                                <tbody>
-                                ";
-                                
+                                <thead>
+                                    <tr>
+                                    <th scope='col'>Data</th>
+                                    <th scope='col'>Nome</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                            ";
+
+                            $cpf = $row['CPF'];
+                            $query2 = "SELECT nome from usuario where cpf = '$cpf'";
+                            $result2 = $db->query($query2);
+                            $row2 = $result2->fetch(PDO::FETCH_ASSOC);
+                            
                             echo "<tr>";
                             echo "<td>".$row['hora'] ." </td>";
                             echo "<td>". $row2['nome'] ."</td>";
                             echo"</tr>";
+                        
                             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<tr>";
-                            echo "<td>".$row['hora'] ." </td>";
-                            echo "<td>". $row2['nome'] ."</td>";
-                            echo"</tr>";
+                                $cpf = $row['CPF'];
+                                $query2 = "SELECT nome from usuario where cpf = '$cpf'";
+                                $result2 = $db->query($query2);
+                                $row2 = $result2->fetch(PDO::FETCH_ASSOC);
+                                echo"<tr>";
+                                echo "<td>".$row['hora'] ." </td>";
+                                echo "<td>". $row2['nome'] ."</td>";
+                                echo"</tr>";
                             }
+                            echo'</table>';
                         }
                         else{
                             echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">LOG não encotrado.</div>';
@@ -102,9 +112,8 @@
                          echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">ERRO AO PROCURAR LOG ' . $e->getMessage() . '</div>';
                     }
                 }
-                
-
-                ?>
+            
+            ?>
         </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

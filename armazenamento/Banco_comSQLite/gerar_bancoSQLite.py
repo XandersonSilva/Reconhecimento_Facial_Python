@@ -25,9 +25,10 @@ comandoCriacaoT = '''
         presente boolean 
 	);
 
-    CREATE table logs(
+    CREATE TABLE logs(
         idLog integer primary key AUTOINCREMENT ,
         dataLog datetime,
+		hora datetime,
         CPF integer references usuario (CPF),
         motivo varchar,
         foto varchar

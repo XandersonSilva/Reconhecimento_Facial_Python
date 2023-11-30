@@ -33,7 +33,7 @@
                 <a class="nav-link active" aria-current="true" href="./edit_user.php">Editar usuário</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./del_user.php">Excluir usuário</a>
+                <a class="nav-link" href="./logs_date.php">LOGS data</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="./logs_user.php">LOGS de usuários</a>

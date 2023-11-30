@@ -60,7 +60,7 @@ if RE == True:
             cursor.execute('select nome from usuario where id = ' + str(id[j]))
             nome = cursor.fetchall()[0][0]
             cursor.execute('select cpf from usuario where id = ' + str(id[j]))
-            CPF = cursor.fetchall()[0][0]
+            CPF = str(cursor.fetchall()[0][0])
             print('=================================')
             print('IDENTIFICADO ALUNO: ' + nome)
             print(distancia)
@@ -70,7 +70,9 @@ if RE == True:
             # Conecta ao banco de dados SQLite
 
             # Coleta os dados da tabela usuario
-            cursor.execute('INSERT INTO logs(dataLog, cpf) values("'+ datetime.now().strftime('%d/%m/%Y %H') + '",' + str(CPF) + ')')
+            dia = datetime.now().strftime('%d/%m/%Y %H')
+            diaH = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            cursor.execute("INSERT INTO logs (dataLog, hora, cpf) VALUES (?, ?, ?)", (dia, diaH, CPF))
             Llogs = cursor.fetchall()
             banco.commit()
             break #Caso retirado, é possível ver todos os alunos que "batem"

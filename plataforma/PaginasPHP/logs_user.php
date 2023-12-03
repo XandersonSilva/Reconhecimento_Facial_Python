@@ -54,26 +54,23 @@
 
                 if($nome != ''){
                     try{
-                        // Usando a extensão PDO para criar uma conexão com o banco
-                        // Caminho relativo para o banco de dados SQLite (dois níveis acima)
-                        $dbPathRelativo = '../../armazenamento/Banco_comSQLite/banco.db';
+                        include_once "../ScriptsPHP/conexao.php";
 
-                        // Caminho completo usando __DIR__ que retorna a localização do arquivo atual
-                        $bdPath = __DIR__ . '/' . $dbPathRelativo;
-                        // instância do PDO com o caminho final
-                        $db = new PDO('sqlite:' . $bdPath);
+                        //Comando para busca dos LOGS do usuário
+                        $query = $db->prepare("SELECT * from logs where cpf = :log ORDER BY dataLog DESC");
+                        $query->bindParam(':log', $log, PDO::PARAM_STR);
+                        $query->execute();
+                        $row = $query->fetch(PDO::FETCH_ASSOC);
 
-                        $query =  "SELECT * from logs where cpf = $log ORDER BY dataLog DESC";
-                        $query2 =  "SELECT nome from usuario where cpf = $log"; 
-
-                        $result = $db->query($query);
-                        $result2 = $db->query($query2);
-
-                        $row = $result->fetch(PDO::FETCH_ASSOC);
-                        $row2 = $result2->fetch(PDO::FETCH_ASSOC);
+                        //Comando para busca do nome do usuário
+                        $query2 =  $db->prepare("SELECT nome from usuario where cpf = :log"); 
+                        $query2->bindParam(':log', $log, PDO::FETCH_ASSOC);
+                        $query2->execute();
+                        $row2 = $query2->fetch(PDO::FETCH_ASSOC);
 
                         
                         if($row2 and $row){
+                            //Inicio do HTML da tabela de LOGS
                             echo"<table class='table table-striped'>
                                     <thead>
                                         <tr>
@@ -84,21 +81,24 @@
                                 <tbody>
                                 ";
                                 
+                            //Tabela do primeiro LOG e nome
                             echo "<tr>";
                             echo "<td>".$row['hora'] ." </td>";
                             echo "<td>". $row2['nome'] ."</td>";
                             echo"</tr>";
-                            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+
+                            //Tabela com os demais LOGS e nome
+                            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
-                            echo "<td>".$row['hora'] ." </td>";
-                            echo "<td>". $row2['nome'] ."</td>";
-                            echo"</tr>";
+                                echo "<td>".$row['hora'] ." </td>";
+                                echo "<td>". $row2['nome'] ."</td>";
+                                echo"</tr>";
                             }
                         }
-                        else{
+                        else{ //Tratamento de ERRO
                             echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">LOG não encotrado.</div>';
                         }
-                    }catch(PDOException $e){
+                    }catch(PDOException $e){ //Tratamento de ERRO
                          echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">ERRO AO PROCURAR LOG ' . $e->getMessage() . '</div>';
                     }
                 }

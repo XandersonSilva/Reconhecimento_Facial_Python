@@ -1,94 +1,59 @@
 <?php
-// Usando a extensão PDO para criar uma conexão com o banco
-// Caminho relativo para o banco de dados SQLite (dois níveis acima)
-$dbPathRelativo = '../../armazenamento/Banco_comSQLite/banco.db';
-
-// Caminho completo usando __DIR__ que retorna a localização do arquivo atual
-$bdPath = __DIR__ . '/' . $dbPathRelativo;
-// instância do PDO com o caminho final
-$db = new PDO('sqlite:' . $bdPath);
-
-
+include_once "./conexao.php";
 
 if(isset($_POST['add'])) {
-    $matricula = $_POST['matricula'];
-    $nome = $_POST['nome'];
-    $tipo = $_POST['tipo'];
-    $CT = $POST['CT'];
-    $CPF = $_POST['CPF'];
+    //Variáveis
+    //Usando htmlspecialchars(strip_tags()) para evitar XSS
+    $CPF = htmlspecialchars(strip_tags($_POST['CPF']));
+    $nome = htmlspecialchars(strip_tags($_POST['nome']));
+    $funcao = $_POST['tipo'];
+    $matricula = htmlspecialchars(strip_tags($_POST['matricula']));
+    $CT = $_POST['CT'];
     $extensão = $_FILES['foto']['name'];
     $extensão = pathinfo($extensão, PATHINFO_EXTENSION);
+
+    //Adicionar fotos
     if(isset($_FILES['foto']) && !empty($_FILES['foto']) && !$_FILES['foto']['error'])
     {
+        //Confirma a extensão da foto como PNG
         if($extensão == 'png'){
+            //Adicionando a foto ao diretório com as fotos
             move_uploaded_file($_FILES['foto']["tmp_name"] , "../../armazenamento/fotos/". $matricula . ".png");
+            $Caminho_das_fotos = ["/fotos/$matricula.png"][0];
         }
-        else{
+        else{ //Tratamento de ERRO da extensão
             header('Location: ../PaginasPHP/add_user_P.php?ADD=Ext');
             die("Você não pode subir esse tipo de extensão. Apenas PNG.");
         }
-    }else{
+    }else{ //Tratamento de ERRO
         header('Location: ../PaginasPHP/add_user_P.php?ADD=Erro');
         die("Error");
     }
 }
 
-$CPF = $CPF;
-$nome = $nome;
-$tipo = $tipo;
-$cargo_turma = $CT;
-$num  = $matricula;
-$Caminho_das_fotos = ["/fotos/$matricula.png"];
-//$face_Encoded = [];
+//Adição no BD
+if($CPF and $nome and $funcao and $CT and $matricula and $Caminho_das_fotos){
+    try{    
+        //Comando para inserir os dados do usuário
+        $query = $db->prepare("INSERT INTO usuario(cpf, nome, funcao, imagemURL, turma, matricula) VALUES(:cpf, :nome, :funcao, :imagemURL, :turma, :matricula)");
+        //Usando bindParam() para evitar SQLINJECTION
+        $query->bindParam(':cpf', $CPF, PDO::PARAM_INT);
+        $query->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $query->bindParam(':funcao', $funcao, PDO::PARAM_STR);
+        $query->bindParam(':imagemURL', $Caminho_das_fotos, PDO::PARAM_STR);
+        $query->bindParam(':turma', $CT, PDO::PARAM_STR);
+        $query->bindParam(':matricula', $matricula, PDO::PARAM_STR);
 
-if($tipo == $cargo_turma){
-    $query =  "insert into usuario(
-        cpf,
-        nome,
-        funcao,
-        numero_identificacao_pessoal,
-        imagemURL,
-        presente
-        ) 
-        values(
-            '$CPF'  ,
-            '$nome' ,
-            '$tipo' ,
-            '$num'  ,
-            '$Caminho_das_fotos[0]',
-            0
-        );
-        ";
-        
-        
-    }else{
-        $query =  "insert into usuario(
-            cpf,
-            nome,
-            funcao,
-            turma,
-            matricula,
-            imagemURL,
-            presente
-            ) 
-            values(
-                '$CPF'        ,
-                '$nome'       ,
-                '$tipo'       ,
-                '$cargo_turma',
-                '$num'        ,
-                '$Caminho_das_fotos[0]',
-                0
-            );";
-            
+        $result = $query->execute();
+        header('Location: ../PaginasPHP/add_user_P.php?ADD=Add');
+    }catch (PDOException $e) { //Tratamento de ERRO
+        echo "Erro: " . $e->getMessage();
+        header('Location: ../PaginasPHP/add_user_P.php?ADD=Erro');
+    }
 }
-
-try{
-    $result = $db->exec($query);
-    header('Location: ../PaginasPHP/add_user_P.php?ADD=Add');
-} catch (PDOException $e) {
-    echo "Erro: " . $e->getMessage();
-    
+else{ //Tratamento de ERRO
+    header('Location: ../PaginasPHP/add_user_P.php?ADD=Erro');
+    die("Error");
 }
 
 ?>

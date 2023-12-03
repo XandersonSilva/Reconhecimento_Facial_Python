@@ -55,7 +55,7 @@ if RE == True:
         distancia = fr.face_distance([encodeAluno],encodeCam)
 
         #Printa se é a mesma pessoa, e a distância dos valores dos rostos.
-        if(distancia <= 0.5):
+        if(distancia <= 0.6):
             cursor = banco.cursor()
             cursor.execute('select nome from usuario where id = ' + str(id[j]))
             nome = cursor.fetchall()[0][0]
@@ -66,16 +66,15 @@ if RE == True:
             print(distancia)
             print('=================================')
 
-            #CRIA LOGS DE ACESSO AINDA COM JSON
             # Conecta ao banco de dados SQLite
 
-            # Coleta os dados da tabela usuario
+            # Cria os LOGS e coloca na tabela
             dia = datetime.now().strftime('%d/%m/%Y %H')
             diaH = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             cursor.execute("INSERT INTO logs (dataLog, hora, cpf) VALUES (?, ?, ?)", (dia, diaH, CPF))
             Llogs = cursor.fetchall()
             banco.commit()
-            break #Caso retirado, é possível ver todos os alunos que "batem"
+             #Caso retirado, é possível ver todos os alunos que "batem"
             
 
         else:

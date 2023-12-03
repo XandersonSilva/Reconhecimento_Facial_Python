@@ -60,11 +60,11 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label" style="padding-top: 15px;">Tipo:</label>
                     <select class="form-select" aria-label="Default select example" name="tipo" required>
-                        <option value="1">Aluno</option>
-                        <option value="2">Professor</option>
-                        <option value="3">Servidor</option>
-                        <option value="4">Funcionário</option>
-                        <option value="5">Outro</option>
+                        <option value="Aluno">Aluno</option>
+                        <option value="Professor">Professor</option>
+                        <option value="Servidor">Servidor</option>
+                        <option value="Funcionario">Funcionário</option>
+                        <option value="Outro">Outro</option>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -73,16 +73,16 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Cargo / Turma</label>
-                    <select name = "CT" class="form-select" aria-label="Default select example" name="tipo" required>
-                        <option value="1">Professor</option>
-                        <option value="2">Servidor</option>
-                        <option value="4">Funcionário</option>
-                        <option value="5">Informática</option>
-                        <option value="6">Mineração</option>
-                        <option value="7">Eletromecânica</option>
-                        <option value="8">Meio ambiente</option>
-                        <option value="9">Lic. Computação</option>
-                        <option value="10">Outro</option>
+                    <select name = "CT" class="form-select" aria-label="Default select example" required>
+                        <option value="Professor">Professor</option>
+                        <option value="Servidor">Servidor</option>
+                        <option value="Funcionário">Funcionário</option>
+                        <option value="Informática">Informática</option>
+                        <option value="Mineração">Mineração</option>
+                        <option value="Eletromecânica">Eletromecânica</option>
+                        <option value="Meio ambiente">Meio ambiente</option>
+                        <option value="Lic. Computação">Lic. Computação</option>
+                        <option value="Outro">Outro</option>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -91,7 +91,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">CPF: </label>
-                    <input name="CPF" type="text" class="form-control" id="exampleInputPassword1" required>
+                    <input name="CPF" type="number" class="form-control" id="exampleInputPassword1" required>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Foto: </label>
@@ -108,6 +108,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
+    //Função que limita o tamanho da imagem a 2mb
      function checkFileSize() {
             var fileInput = document.getElementById('fotoUsr');
             var maxSize = 2 * 1024 * 1024; // 2 megabytes

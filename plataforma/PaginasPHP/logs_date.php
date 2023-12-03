@@ -42,14 +42,13 @@
         </div>
         <div class="card-body">
             <h5 class="card-title">LOGS por data</h5>
-            <form action="" method="post">
-                <label for="search">Data e hora de acesso: </label>
-                <input type="date" name="date" required>
-                <input type="number" name="hora" required placeholder="Hora: 00">
-                <input type="submit" value="Procurar" class="btn btn-info">
-            </form>
+                <form action="" method="post">
+                    <label for="search">Data e hora de acesso: </label>
+                    <input type="date" name="date" required>
+                    <input type="number" name="hora" required placeholder="Hora: 00">
+                    <input type="submit" value="Procurar" class="btn btn-info">
+                </form>
             <?php 
-            
                 $data = $_POST['date'] ?? '';
                 $data = date('d/m/Y', strtotime($data));
                 $hora = $_POST['hora'] ?? '';
@@ -57,22 +56,16 @@
 
                 if ($data != '' and $hora != ''){
                     try{
-                        // Usando a extensão PDO para criar uma conexão com o banco
-                        // Caminho relativo para o banco de dados SQLite (dois níveis acima)
-                        $dbPathRelativo = '../../armazenamento/Banco_comSQLite/banco.db';
-
-                        // Caminho completo usando __DIR__ que retorna a localização do arquivo atual
-                        $bdPath = __DIR__ . '/' . $dbPathRelativo;
-                        // instância do PDO com o caminho final
-                        $db = new PDO('sqlite:' . $bdPath);
+                        include_once "../ScriptsPHP/conexao.php";
                         
-                        $query =  "SELECT * from logs where dataLog = '$log'";
-                        
-                        $result = $db->query($query);
-
-                        $row = $result->fetch(PDO::FETCH_ASSOC);
+                        //Comando para buscar pelo LOG
+                        $query =  $db->prepare("SELECT * from logs where dataLog = :log");
+                        $query->bindParam(':log', $log, PDO::FETCH_ASSOC);
+                        $query->execute();
+                        $row = $query->fetch(PDO::FETCH_ASSOC);
 
                         if($row){
+                            //Inicio do HTML da tabela
                             echo"<table class='table table-striped'>
                                 <thead>
                                     <tr>
@@ -83,21 +76,28 @@
                             <tbody>
                             ";
 
+                            //Comando para buscar o nome do usuário
                             $cpf = $row['CPF'];
-                            $query2 = "SELECT nome from usuario where cpf = '$cpf'";
-                            $result2 = $db->query($query2);
-                            $row2 = $result2->fetch(PDO::FETCH_ASSOC);
+
+                            $query2 = $db->prepare("SELECT nome from usuario where cpf = :cpf");
+                            $query2->bindParam(':cpf', $cpf, PDO::FETCH_ASSOC);
+                            $query2->execute();
+                            $row2 = $query2->fetch(PDO::FETCH_ASSOC);
                             
+                            //Echo do primeiro LOG
                             echo "<tr>";
                             echo "<td>".$row['hora'] ." </td>";
                             echo "<td>". $row2['nome'] ."</td>";
                             echo"</tr>";
                         
-                            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                                 $cpf = $row['CPF'];
-                                $query2 = "SELECT nome from usuario where cpf = '$cpf'";
-                                $result2 = $db->query($query2);
-                                $row2 = $result2->fetch(PDO::FETCH_ASSOC);
+
+                                $query2 = $db->prepare("SELECT nome from usuario where cpf = :cpf");
+                                $query2->bindParam(':cpf', $cpf, PDO::FETCH_ASSOC);
+                                $query2->execute();
+                                $row2 = $query2->fetch(PDO::FETCH_ASSOC);
+                                    //Echo dos LOGS na tabela com o nome
                                 echo"<tr>";
                                 echo "<td>".$row['hora'] ." </td>";
                                 echo "<td>". $row2['nome'] ."</td>";
@@ -105,10 +105,10 @@
                             }
                             echo'</table>';
                         }
-                        else{
+                        else{ //Tratamento de ERRO
                             echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">LOG não encotrado.</div>';
                         }
-                    }catch(PDOException $e){
+                    }catch(PDOException $e){ //Tratamento de ERRO
                          echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">ERRO AO PROCURAR LOG ' . $e->getMessage() . '</div>';
                     }
                 }

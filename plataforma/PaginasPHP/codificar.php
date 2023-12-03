@@ -48,27 +48,35 @@
             </form>
             <br>    
             <?php 
+                //Requisição para o FLASK para codificar as fotos
                 if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     try {
+                        //Gera uma chave aleatório entre 1000 e 9999
                         $key = rand(1000, 9999);
 
+                        //Arquivo da chave
                         $BD = '../../key.json';
 
                         $novo_Val = (
                             $key
                         );
-
+                        
+                        //Adiciona o valor ao JSON
                         $NBD = json_encode($novo_Val);
                         file_put_contents($BD, $NBD);
 
+                        //Realiza uma requisição com a chave como parâmetro
                         $response = @file_get_contents("http://localhost:5000/validate?OK=$key");
+                        
+                        //Tratamento de ERRO
                         if ($response === false) {
                             throw new Exception('Servidor fora do ar');
                         }
                         else{
+                            //Resposta
                             echo $response;
                         }
-                    } catch (Exception $e) {
+                    } catch (Exception $e) { //Tratamento de ERRO
                         echo "<div class='alert alert-danger text-center  border border-danger'>Erro interno do servidor.</div>";
                     }
                 }

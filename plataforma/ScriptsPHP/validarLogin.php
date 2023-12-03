@@ -1,14 +1,5 @@
 <?php
-
-// Usando a extensão PDO para criar uam conexão com o banco
-// Caminho relativo para o banco de dados SQLite (dois níveis acima)
-$dbPathRelativo = '../../armazenamento/Banco_comSQLite/banco.db';
-
-// Caminho completo usando __DIR__ que retorna a localização do arquivo atual
-$bdPath = __DIR__ . '/' . $dbPathRelativo;
-// instância do PDO com o caminho final
-$db = new PDO('sqlite:' . $bdPath);
-
+include_once "./conexao.php";
 
 // Consultando dados
 $query = "SELECT id, nome, email, chave_de_acesso FROM usuario WHERE nivelAcesso = 'Admin'";

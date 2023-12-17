@@ -5,14 +5,13 @@ include_once "./conexao.php";
 //Usando htmlspecialchars(strip_tags()) para evitar XSS
 $CPF = htmlspecialchars(strip_tags($_POST['cpf'])) ?? '';
 
-$matricula = htmlspecialchars(strip_tags($_POST['matricula'])) ?? '';
 if(isset($_POST['del'])) {
-    if($matricula != ''){
+    if($CPF != ''){
         try{
             //Comando para deletar o usuário de acordo com a matricula
             //Usando bindParam() para evitar SQLINJECTION
-            $query = $db->prepare("DELETE from usuario WHERE matricula = :matricula");
-            $query->bindParam(':matricula', $matricula, PDO::PARAM_STR); 
+            $query = $db->prepare("DELETE from usuario WHERE CPF = :cpf");
+            $query->bindParam(':cpf', $CPF, PDO::PARAM_STR); 
             $result = $query->execute();
 
             $query2 = $db->prepare("DELETE from logs WHERE CPF = :cpf");
@@ -20,7 +19,7 @@ if(isset($_POST['del'])) {
             $result2 = $query2->execute();
 
             //Comando para deletar a foto do usuário
-            unlink("../../armazenamento/fotos/$matricula.png");
+            unlink("../../armazenamento/fotos/$CPF.png");
 
             header('Location: ../PaginasPHP/edit_user.php?ADD=DEL');
         } catch (PDOException $e) { //Tratamento de ERRO

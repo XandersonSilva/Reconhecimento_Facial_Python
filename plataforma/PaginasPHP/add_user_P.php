@@ -42,6 +42,7 @@
         </div>
         <div class="card-body">
             <?php 
+                //MENSAGENS
                 if(isset($_GET['ADD'])){
                     if($_GET['ADD'] == "Add"){
                         echo '<br><div class="alert alert-success text-center  border border-success" role="alert">Usuário adicionado com sucesso.</div>';
@@ -51,6 +52,12 @@
                     }
                     if($_GET['ADD'] == "Erro"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir a imagem.</div>';
+                    }
+                    if($_GET['ADD'] == "ErroG"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro não compreendido.</div>';
+                    }
+                    if($_GET['ADD'] == "ErroBD"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir no banco de dados.</div>';
                     }
                 }
                 

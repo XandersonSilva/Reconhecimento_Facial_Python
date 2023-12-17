@@ -18,9 +18,9 @@ comandoCriacaoT = '''
         imagemURL varchar, 
         turma varchar,
         periodo varchar,
-        numero_identificacao_pessoal varchar,
+        motivo varchar,
         matricula int,
-        nivelAcesso varchar,
+        nivelAcesso boolean,
         pontos array, 
         presente boolean 
 	);
@@ -41,7 +41,7 @@ comandoCriacaoT = '''
 cursor.execute(comandoCriacaoT)
 
 #estrutura para inserir um novo usuário
-comando = 'insert into usuario(nome, email, endereco, chave_de_acesso, nivelAcesso) values("Administrador","admin@ifba.edu.br", "Jacobina","adminIFBA", "Admin");'
+comando = 'insert into usuario(nome, email, endereco, chave_de_acesso, nivelAcesso) values("Administrador","admin@ifba.edu.br", "Jacobina","$2y$10$SCD4vC4VvyUwB0zXkUNW3Oim6DL8rklRhR2pn6rGixglp/djdsvnK", "TRUE");'
 cursor.execute(comando)
 #comando para confirmar a execução do insert
 banco.commit()

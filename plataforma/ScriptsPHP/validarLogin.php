@@ -2,7 +2,7 @@
 include_once "./conexao.php";
 
 // Consultando dados
-$query = "SELECT id, nome, email, chave_de_acesso FROM usuario WHERE nivelAcesso = 'Admin'";
+$query = "SELECT id, nome, email, chave_de_acesso FROM usuario WHERE nivelAcesso = 'TRUE'";
 $result = $db->query($query);
 
 $email = trim($_POST['Email']) ?? '';

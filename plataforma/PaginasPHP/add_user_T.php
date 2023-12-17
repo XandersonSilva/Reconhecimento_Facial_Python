@@ -16,7 +16,7 @@
     <nav class="navbar bg-info border-body" data-bs-theme="dark">
         <div class="container-fluid">
             <h3 class="text-light">Projeto catraca / IFBA</h3>
-            <form action="../PaginasPHP/index.php">
+            <form action="./index.php">
                 <br>
                 <button class="btn btn-dark" type="submit">Voltar</button>
             </form>
@@ -30,7 +30,7 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link " href="./add_user_P.php">Adicionar permanente</a>
+                <a class="nav-link"  href="./add_user_P.php">Adicionar permanente</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="true" href="./add_user_T.php">Adicionar temporário</a>
@@ -41,13 +41,82 @@
             </ul>
         </div>
         <div class="card-body">
+            <?php 
+                //MENSAGENS
+                if(isset($_GET['ADD'])){
+                    if($_GET['ADD'] == "Add"){
+                        echo '<br><div class="alert alert-success text-center  border border-success" role="alert">Usuário adicionado com sucesso.</div>';
+                    }
+                    if($_GET['ADD'] == "Ext"){
+                        echo '<br><div class="alert alert-warning text-center  border border-warning" role="alert">Você não pode subir esse tipo de extensão. Apenas PNG</div>';
+                    }
+                    if($_GET['ADD'] == "Erro"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir a imagem.</div>';
+                    }
+                    if($_GET['ADD'] == "ErroG"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro não compreendido.</div>';
+                    }
+                    if($_GET['ADD'] == "ErroBD"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir no banco de dados.</div>';
+                    }
+                }
+                
+            ?>
             <h5 class="card-title">Adicionar usuário temporário</h5>
-            <p class="card-text">Em desenvolvimento...</p>
-            <a href="#" class="btn btn-info">Adicionar</a>
+            <form action="../ScriptsPHP/add_user_T.php" method="post" class="card container text-left" style="width: 30em;" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label" style="padding-top: 15px;">Dias:</label>
+                    <select class="form-select" aria-label="Default select example" name="dias" required>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="7">7</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Nome: </label>
+                    <input name="nome" type="text" class="form-control" id="exampleInputPassword1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">CPF: </label>
+                    <input name="CPF" type="number" class="form-control" id="exampleInputPassword1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Motivo: </label>
+                    <input name="motivo" type="text" class="form-control" id="exampleInputPassword1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Foto: </label>
+                        <br>
+                    <input type="file" name="foto" onchange="checkFileSize()"  id="fotoUsr" accept="image/png">
+                </div>
+                    <input name="add" type="submit" value="Adicionar" class="btn btn-info">
+                    <br>
+            </form>
+            
         </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    //Função que limita o tamanho da imagem a 2mb
+     function checkFileSize() {
+            var fileInput = document.getElementById('fotoUsr');
+            var maxSize = 2 * 1024 * 1024; // 2 megabytes
+            
+            if (fileInput.files.length > 0) {
+                var fileSize = fileInput.files[0].size;
+                
+                if (fileSize > maxSize) {
+                    alert('O arquivo excede o tamanho máximo permitido.');
+                    // Limpar o campo de arquivo se o tamanho for excedido
+                    fileInput.value = '';
+                }
+            }
+     }
+    
+</script>
 </body>
 </html>

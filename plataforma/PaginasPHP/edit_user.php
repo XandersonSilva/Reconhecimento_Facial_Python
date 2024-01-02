@@ -57,6 +57,9 @@
                     if($_GET['ADD'] == "DEL"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Usuário excluido com sucesso.</div>';
                     }
+                    if($_GET['ADD'] == "date"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">É necessário que a data tenha no mínimo 24 horas a mais do dia atual.</div>';
+                    }
                 }
                 
             ?>

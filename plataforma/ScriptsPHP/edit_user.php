@@ -57,15 +57,22 @@ if(isset($_POST['addP'])){
 if(isset($_POST['addT'])){
     $CPF = htmlspecialchars(strip_tags($_POST['CPF']));
     $nome = htmlspecialchars(strip_tags($_POST['nome']));
-    $dias = $_POST['dias'];
-    $dias = date("d/m/Y")." ".$dias;
     $motivo = htmlspecialchars(strip_tags($_POST['motivo']));
     $extensão = $_FILES['foto']['name'];
     $extensão = pathinfo($extensão, PATHINFO_EXTENSION);
     $old2 = $_POST['old2'];
-
-
-    echo "$CPF, $nome, $dias, $motivo, $extensão, $old2";
+    
+    $dia = new DateTime($_POST['dias']); //Data fornecida pelo user
+    $dias = $dia->format('d/m/Y');       //Formatação da data acima para salvar no BD
+    $dia = $dia->format('Y/m/d');        //Formatação da data acima para comparação no IF abaixo
+    $hoje = new DateTime();              //Data do dia atual
+    $hoje = $hoje->format('Y/m/d');      //Formatação do dia atual
+    
+    //Verificação da data
+    if($dia <= $hoje){
+        header('Location: ../PaginasPHP/edit_user.php?ADD=date');
+        die("É necessário no mínimo 24h a mais na data.");
+    }
 
     if(isset($_FILES['foto']) && !empty($_FILES['foto']) && !$_FILES['foto']['error']){
         //Verifica a extensão da foto para PNG

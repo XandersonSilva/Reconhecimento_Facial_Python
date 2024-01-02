@@ -7,7 +7,7 @@ cursor = banco.cursor()
 
 #SQL para gerar as tabelas
 comandoCriacaoT = '''
-    CREATE table usuario(
+    CREATE TABLE usuario(
         id integer primary key AUTOINCREMENT ,
         CPF int,
         nome varchar(50),
@@ -27,11 +27,8 @@ comandoCriacaoT = '''
 
     CREATE TABLE logs(
         idLog integer primary key AUTOINCREMENT ,
-        dataLog datetime,
-		hora datetime,
-        CPF integer references usuario (CPF),
-        motivo varchar,
-        foto varchar
+        hora datetime,
+        CPF integer references usuario (CPF)
     );
 
     
@@ -50,5 +47,5 @@ banco.commit()
 #cursor.execute('drop table usuario')
 
 #coletar os dados da tabela
-cursor.execute('select * from usuario')
-print(cursor.fetchall())
+#cursor.execute('select * from usuario')
+#print(cursor.fetchall())

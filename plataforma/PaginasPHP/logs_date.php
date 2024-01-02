@@ -52,14 +52,14 @@
                 $data = $_POST['date'] ?? '';
                 $data = date('d/m/Y', strtotime($data));
                 $hora = $_POST['hora'] ?? '';
-                $log = "$data $hora"; 
+                $log = "$data $hora%"; 
 
                 if ($data != '' and $hora != ''){
                     try{
                         include_once "../ScriptsPHP/conexao.php";
                         
                         //Comando para buscar pelo LOG
-                        $query =  $db->prepare("SELECT * from logs where dataLog = :log");
+                        $query =  $db->prepare("SELECT * from logs where hora LIKE :log ORDER BY hora DESC");
                         $query->bindParam(':log', $log, PDO::FETCH_ASSOC);
                         $query->execute();
                         $row = $query->fetch(PDO::FETCH_ASSOC);

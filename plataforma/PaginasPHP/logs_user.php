@@ -57,7 +57,7 @@
                         include_once "../ScriptsPHP/conexao.php";
 
                         //Comando para busca dos LOGS do usuário
-                        $query = $db->prepare("SELECT * from logs where cpf = :log ORDER BY dataLog DESC");
+                        $query = $db->prepare("SELECT * from logs where cpf = :log ORDER BY hora DESC");
                         $query->bindParam(':log', $log, PDO::PARAM_STR);
                         $query->execute();
                         $row = $query->fetch(PDO::FETCH_ASSOC);

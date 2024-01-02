@@ -59,6 +59,9 @@
                     if($_GET['ADD'] == "ErroBD"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir no banco de dados.</div>';
                     }
+                    if($_GET['ADD'] == "date"){
+                        echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">É necessário que a data tenha no mínimo 24 horas a mais do dia atual.</div>';
+                    }
                 }
                 
             ?>
@@ -66,13 +69,7 @@
             <form action="../ScriptsPHP/add_user_T.php" method="post" class="card container text-left" style="width: 30em;" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label" style="padding-top: 15px;">Dias:</label>
-                    <select class="form-select" aria-label="Default select example" name="dias" required>
-                        <option value="1">1</option>
-                        <option value="3">3</option>
-                        <option value="7">7</option>
-                        <option value="15">15</option>
-                        <option value="30">30</option>
-                    </select>
+                    <input type='date' name='dias' required>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Nome: </label>

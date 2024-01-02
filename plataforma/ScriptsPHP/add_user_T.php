@@ -6,11 +6,22 @@ if(isset($_POST['add'])) {
     //Usando htmlspecialchars(strip_tags()) para evitar XSS
     $CPF = htmlspecialchars(strip_tags($_POST['CPF']));
     $nome = htmlspecialchars(strip_tags($_POST['nome']));
-    $dias = $_POST['dias'];
-    $dias = date("d/m/Y")." ".$dias;
     $motivo = htmlspecialchars(strip_tags($_POST['motivo']));
+    
     $extensão = $_FILES['foto']['name'];
     $extensão = pathinfo($extensão, PATHINFO_EXTENSION);
+    
+    $dia = new DateTime($_POST['dias']); //Data fornecida pelo user
+    $dias = $dia->format('d/m/Y');       //Formatação da data acima para salvar no BD
+    $dia = $dia->format('Y/m/d');        //Formatação da data acima para comparação no IF abaixo
+    $hoje = new DateTime();              //Data do dia atual
+    $hoje = $hoje->format('Y/m/d');      //Formatação do dia atual
+    
+    //Verificação da data
+    if($dia <= $hoje){
+        header('Location: ../PaginasPHP/add_user_T.php?ADD=date');
+        die("É necessário no mínimo 24h a mais na data.");
+    }
 
     //Adicionar fotos
     if(isset($_FILES['foto']) && !empty($_FILES['foto']) && !$_FILES['foto']['error'])

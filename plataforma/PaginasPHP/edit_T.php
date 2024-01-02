@@ -16,13 +16,7 @@ echo"
         <br>
         <h2 style='text-align: center'>Temporário</h2>
         <label for='exampleInputEmail1' class='form-label' style='padding-top: 15px;'>Dias:</label>
-        <select class='form-select' aria-label='Default select example' name='dias' required>
-            <option value='1'>1</option>
-            <option value='3'>3</option>
-            <option value='7'>7</option>
-            <option value='15'>15</option>
-            <option value='30'>30</option>
-        </select>
+        <input type='date' name='dias' required>
     </div>
     <div class='mb-3'>
         <label for='exampleInputPassword1' class='form-label'>Nome: </label>

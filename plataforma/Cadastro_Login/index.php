@@ -1,8 +1,10 @@
 <?php 
     // VERFICA SE O USUÁRIO JÁ ESTÁ LOGADO, CASO SIM, REDIRECIONA PARA A PÁGINA PRINCIPAL
     session_start();
-    if ((isset($_SESSION['logado']) == true)){
+    if ((isset($_SESSION['logado_admin']) == true)){
         header('Location: ../PaginasPHP/index.php');
+    } elseif (isset($_SESSION['logado_controlador']) == true){
+        header('Location: ../PaginasPHP/controlador/liberar_catraca.php');
     }
 ?>
 <!DOCTYPE html>

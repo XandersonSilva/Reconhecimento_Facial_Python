@@ -1,4 +1,6 @@
 <?php 
+//Página para ser carregada de edição de user temporário
+
     //BOTÃO DE DELETE
 echo "
 <br>
@@ -20,7 +22,7 @@ echo"
     </div>
     <div class='mb-3'>
         <label for='exampleInputPassword1' class='form-label'>Nome: </label>
-        <input name='nome' type='text' class='form-control' id='exampleInputPassword1' placeholder='$row[nome]' required>
+        <input name='nome' type='text' class='form-control' id='exampleInputPassword1' placeholder='$row[nome]' maxlength='50' required>
     </div>
     <div class='mb-3'>
         <label for='exampleInputPassword1' class='form-label'>CPF: </label>

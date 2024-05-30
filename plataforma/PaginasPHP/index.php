@@ -1,4 +1,5 @@
-<?php 
+<?php
+    //VERIFICAÇÃO DE LOGIN
     require('../ScriptsPHP/verificar_logado.php')
 ?>
 <!DOCTYPE html>

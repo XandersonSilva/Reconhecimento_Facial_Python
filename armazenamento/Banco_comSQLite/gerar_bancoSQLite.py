@@ -21,31 +21,23 @@ comandoCriacaoT = '''
         motivo varchar,
         matricula int,
         nivelAcesso boolean,
-        pontos array, 
-        presente boolean 
-	);
+        pontos array)
 
     CREATE TABLE logs(
         idLog integer primary key AUTOINCREMENT ,
         hora datetime,
-        CPF integer references usuario (CPF)
-    );
-
-    
+        CPF integer references usuario (CPF));
  '''
 
-#essa linha deve ser executada apenas uma vez para criar as tabelas do banco
+#Criar as tabelas do banco
 cursor.execute(comandoCriacaoT)
 
-#estrutura para inserir um novo usuário
+#User admin
 comando = 'insert into usuario(nome, email, endereco, chave_de_acesso, nivelAcesso) values("Administrador","admin@ifba.edu.br", "Jacobina","$2y$10$SCD4vC4VvyUwB0zXkUNW3Oim6DL8rklRhR2pn6rGixglp/djdsvnK", "TRUE");'
 cursor.execute(comando)
-#comando para confirmar a execução do insert
+#User controlador
+comando = 'insert into usuario(nome, email, endereco, chave_de_acesso, nivelAcesso) values("Controlador","controlador@ifba.edu.br", "Jacobina","$2y$10$Fxp5t9i3Wbzqkmo2JUDNqurOnne8FMG21WJ.w/FFoqWVAOBjtwYYG", "TRUE");'
+cursor.execute(comando)
+
+#Execução do insert
 banco.commit()
-
-#Excluir tabela
-#cursor.execute('drop table usuario')
-
-#coletar os dados da tabela
-#cursor.execute('select * from usuario')
-#print(cursor.fetchall())

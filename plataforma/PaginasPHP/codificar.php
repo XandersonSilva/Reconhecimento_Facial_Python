@@ -1,4 +1,5 @@
 <?php 
+    //VERIFICAÇÃO DE LOGIN
     require('../ScriptsPHP/verificar_logado.php')
 ?>
 <!DOCTYPE html>
@@ -68,7 +69,7 @@
                         //Realiza uma requisição com a chave como parâmetro
                         $response = @file_get_contents("http://localhost:5000/validate?OK=$key");
                         
-                        //Tratamento de ERRO
+                        //Tratamento de ERRO servidor fora 
                         if ($response === false) {
                             throw new Exception('Servidor fora do ar');
                         }
@@ -76,7 +77,7 @@
                             //Resposta
                             echo $response;
                         }
-                    } catch (Exception $e) { //Tratamento de ERRO
+                    } catch (Exception $e) { //Tratamento de ERRO interno
                         echo "<div class='alert alert-danger text-center  border border-danger'>Erro interno do servidor.</div>";
                     }
                 }

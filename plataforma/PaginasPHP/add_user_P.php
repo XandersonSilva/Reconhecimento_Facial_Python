@@ -1,4 +1,5 @@
 <?php 
+    //VERIFICAÇÃO DE LOGIN
     require('../ScriptsPHP/verificar_logado.php')
 ?>
 <!DOCTYPE html>
@@ -44,18 +45,23 @@
             <?php 
                 //MENSAGENS
                 if(isset($_GET['ADD'])){
+                    //SUCESSO
                     if($_GET['ADD'] == "Add"){
                         echo '<br><div class="alert alert-success text-center  border border-success" role="alert">Usuário adicionado com sucesso.</div>';
                     }
+                    //ERRO DE EXTENSÃO
                     if($_GET['ADD'] == "Ext"){
                         echo '<br><div class="alert alert-warning text-center  border border-warning" role="alert">Você não pode subir esse tipo de extensão. Apenas PNG</div>';
                     }
+                    //ERRO AO SUBIR IMAGEM
                     if($_GET['ADD'] == "Erro"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir a imagem.</div>';
                     }
+                    //ERRO NÃO COMPREENDIDO
                     if($_GET['ADD'] == "ErroG"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro não compreendido.</div>';
                     }
+                    //ERRO DO BANCO DE DADOS
                     if($_GET['ADD'] == "ErroBD"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir no banco de dados.</div>';
                     }
@@ -76,7 +82,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Número de matrícula / associado:</label>
-                    <input name="matricula" type="text" class="form-control" id="exampleInputEmail1" required>
+                    <input name="matricula" type="number" class="form-control" id="exampleInputEmail1" required>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Cargo / Turma</label>
@@ -94,7 +100,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Nome: </label>
-                    <input name="nome" type="text" class="form-control" id="exampleInputPassword1" required>
+                    <input name="nome" type="text" class="form-control" id="exampleInputPassword1" maxlength="50">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">CPF: </label>
@@ -103,7 +109,7 @@
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Foto: </label>
                         <br>
-                    <input type="file" name="foto" onchange="checkFileSize()"  id="fotoUsr" accept="image/png">
+                    <input type="file" name="foto" onchange="checkFileSize()"  id="fotoUsr" accept="image/png" required>
                 </div>
                     <input name="add" type="submit" value="Adicionar" class="btn btn-info">
                     <br>

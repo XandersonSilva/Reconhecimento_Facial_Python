@@ -1,4 +1,5 @@
 <?php 
+    //VERIFICAÇÃO DE LOGIN
     require('../ScriptsPHP/verificar_logado.php')
 ?>
 <!DOCTYPE html>
@@ -44,19 +45,25 @@
             <h5 class="card-title">Editar usuário</h5>
             <form action="" method="post">
             <?php 
+                //MENSAGENS
                 if(isset($_GET['ADD'])){
+                    //EDIÇÃO COM SUCESSO
                     if($_GET['ADD'] == "Add"){
                         echo '<br><div class="alert alert-success text-center  border border-success" role="alert">Usuário editado com sucesso.</div>';
                     }
+                    //ERRO DE EXTENSÃO
                     if($_GET['ADD'] == "Ext"){
                         echo '<br><div class="alert alert-warning text-center  border border-warning" role="alert">Você não pode subir esse tipo de extensão. Apenas PNG</div>';                    
                     }
+                    //ERRO AO SUBIR IMAGEM
                     if($_GET['ADD'] == "Erro"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Erro ao subir a imagem.</div>';
                     }
+                    //EXCLUIDO COM SUCESSO
                     if($_GET['ADD'] == "DEL"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Usuário excluido com sucesso.</div>';
                     }
+                    //ERRO DE DATA
                     if($_GET['ADD'] == "date"){
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">É necessário que a data tenha no mínimo 24 horas a mais do dia atual.</div>';
                     }
@@ -91,11 +98,11 @@
                         }
                     }
 
-                    else{ //Tratamento de ERRO
+                    else{ //Tratamento de ERRO usuário não encontrado
                         echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">Usuário não encotrado.</div>';
                     }
                     
-                }catch(PDOException $e){ //Tratamento de ERRO
+                }catch(PDOException $e){ //Tratamento de ERRO erro ao procurar usuário
                      echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">ERRO AO PROCURAR USUÁRIO ' . $e->getMessage() . '</div>';
                 }
             }

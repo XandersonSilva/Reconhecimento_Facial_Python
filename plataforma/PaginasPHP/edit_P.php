@@ -1,4 +1,5 @@
 <?php 
+//Página para ser carregada de edição de user permanente
 
     //BOTÃO DE DELETE
 echo "
@@ -29,7 +30,7 @@ echo "
     </div>
     <div class='mb-3'>
         <label for='exampleInputEmail1' class='form-label'>Número de matrícula / associado:</label>
-        <input name='matricula' type='text' class='form-control' id='exampleInputEmail1' placeholder='$row[matricula]' required>
+        <input name='matricula' type='number' class='form-control' id='exampleInputEmail1' placeholder='$row[matricula]' required>
     </div>
     <div class='mb-3'>
         <label for='exampleInputEmail1' class='form-label'>Cargo / Turma</label>
@@ -47,7 +48,7 @@ echo "
     </div>
     <div class='mb-3'>
         <label for='exampleInputPassword1' class='form-label'>Nome: </label>
-        <input name='nome' type='text' class='form-control' id='exampleInputPassword1' placeholder='$row[nome]' required>
+        <input name='nome' type='text' class='form-control' id='exampleInputPassword1' placeholder='$row[nome]' maxlength='50' required>
     </div>
     <div class='mb-3'>
         <label for='exampleInputPassword1' class='form-label'>CPF: </label>

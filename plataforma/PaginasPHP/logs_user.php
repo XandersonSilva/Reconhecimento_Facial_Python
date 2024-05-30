@@ -1,4 +1,5 @@
 <?php 
+    //VERIFICAÇÃO DE LOGIN
     require('../ScriptsPHP/verificar_logado.php')
 ?>
 <!DOCTYPE html>
@@ -95,10 +96,10 @@
                                 echo"</tr>";
                             }
                         }
-                        else{ //Tratamento de ERRO
+                        else{ //Tratamento de ERRO LOG não encontrado
                             echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">LOG não encotrado.</div>';
                         }
-                    }catch(PDOException $e){ //Tratamento de ERRO
+                    }catch(PDOException $e){ //Tratamento de ERRO ao procurar LOG
                          echo '<br><div class="alert alert-danger text-center  border border-danger" role="alert">ERRO AO PROCURAR LOG ' . $e->getMessage() . '</div>';
                     }
                 }

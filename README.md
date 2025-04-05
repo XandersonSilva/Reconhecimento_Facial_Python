@@ -16,7 +16,7 @@
 
 <p align="center">
   <b>Este projeto consiste em um sistema de catracas com reconhecimento facial criado para ser utilizado em ambientes escolares.</b><br>
-  <a href="#">Link para o artigo</a>
+  <a href="https://www.even3.com.br/anais/connepi-belem-2024/835345-sistema-com-reconhecimento-facial-para-controle-de-acesso-ao-ifba---campus-jacobina/">Link para o artigo</a>
 </p>
 
 <h2 id="started">🚀 Início</h2>
